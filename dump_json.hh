@@ -28,15 +28,13 @@ std::string dump_json<Friend>(const Friend &f);
 template <>
 std::string dump_json<Address>(const Address &addr);
 
-// std::ostream &operator << (std::ostream &out, const Person &p);
-// std::ostream &operator << (std::ostream &out, const Friend &p);
-// std::ostream &operator << (std::ostream &out, const Address &p);
-// std::ostream &operator << (std::ostream &out, const Singer &p);
-
 } // namespace my_json
 
 template<typename T>
-requires std::is_same<T, Person>::value || std::is_same<T, Address>::value || std::is_same<T, Friend>::value || std::is_same<T, Singer>::value
+concept MyTypeCheck = std::is_same<T, Person>::value || std::is_same<T, Address>::value || std::is_same<T, Friend>::value || std::is_same<T, Singer>::value;
+
+template<MyTypeCheck T>
+// requires std::is_same<T, Person>::value || std::is_same<T, Address>::value || std::is_same<T, Friend>::value || std::is_same<T, Singer>::value
 std::ostream& operator << (std::ostream &out, const T &p) {
     out << my_json::dump_json(p);
     return out;

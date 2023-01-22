@@ -1,6 +1,6 @@
 
 all: main.cc dump_json.cc parse_json.cc
-	clang++ $^ -o any -std=c++20
+	clang++ $^ -o any -std=c++20 -I rapidjson/include
 
 clean:
 	rm -rf any

@@ -6,6 +6,7 @@
 #include "any.hh"
 #include "types.hh"
 #include "dump_json.hh"
+#include "parse_json.hh"
 
 void test_set() {
     my_traits::Any any;
@@ -56,10 +57,16 @@ void test_dump() {
     // any.set(addr1);
     // std::cout << "address type: " << any.get_typename() << std::endl;
 
-    // std::cout << dump_json(p1) << std::endl;
+    auto json_p1 = my_json::dump_json(p1);
     // std::cout << p1 << std::endl;
-    std::cout << f1 << std::endl;
-    // std::cout << addr1 << std::endl;
+    auto pp = my_json::parse_json<Person>(json_p1);
+    auto json_pp = my_json::dump_json(pp);
+    // if (json_p1 == json_pp) {
+    //     std::cout << "json_p1 == json_pp" << std::endl;
+    // } else {
+    //     std::cout << "json_p1 != json_pp" << std::endl;
+    // }
+    assert(json_p1 == json_pp);
 }
 
 int main() {

@@ -12,11 +12,19 @@ class Any {
 public:
     Any() {}
 
-    Any(const Any &any) {
+    inline void assign(const Any& any) {
         typename_ = any.typename_;
         if (any.wrapper_) {
             wrapper_ = any.wrapper_.get()->clone();
         }
+    }
+    Any(const Any &any) {
+        assign(any);
+    }
+
+    Any& operator=(const Any &any) {
+        assign(any);
+        return *this;
     }
 
     template <typename T>

@@ -18,7 +18,7 @@ std::string dump_json<Singer>(const Singer &singer) {
     std::string ret;
     std::stringstream ss;
     ss << "{\n\"type\":\"" << singer.type << "\",";
-    ss << "\n\"age\":\"" << singer.age << "\"";
+    ss << "\n\"age\":" << singer.age;
     ss << "\n}";
     ret = ss.str();
     return ret;
