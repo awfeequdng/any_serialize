@@ -9,3 +9,37 @@
 
 # hash实现
 - 借鉴clickhouse中的SipHash
+
+
+# 编译运行
+- 下载代码
+```
+$ git clone git@github.com:awfeequdng/any_serialize.git --recursive
+```
+- 设置编译器为clang++ (我编译器为clang15.0, 程序采用C++20的语法)
+```
+$ export CC=clang
+$ export CXX=clang++
+```
+
+- 进入根目录并编译
+```
+$ cd any_serialize
+$ make
+```
+
+- 运行程序：序列化和反序列化的测试在test_dump函数中进行
+```
+$ ./any
+test_set -------
+20
+i
+NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
+std::string type: NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
+St6vectorIiSaIiEE
+d
+test_get -------
+get value failed: invalid type: f
+test_dump -------
+```
+最后一行`test_dump -------` 是序列化函数的打印，没有其他错误信息产生说明序列化和反序列化正常

@@ -24,8 +24,6 @@ void test_set() {
 
     any.set(2.0);
     std::cout << any.get_typename() << std::endl;
-
-
 }
 
 void test_get() {
@@ -71,3 +69,5 @@ int main() {
 
     return 0;
 }
+
+
