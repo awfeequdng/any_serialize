@@ -7,7 +7,6 @@
 #include "rapidjson/prettywriter.h"
 #include "SipHash.hh"
 #include "my_traits.hh"
-#include "serialize.hh"
 
 struct Person;
 

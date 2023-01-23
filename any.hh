@@ -8,12 +8,36 @@
 
 #include "SipHash.hh"
 
-#include "rapidjson/rapidjson.h"
-#include "rapidjson/prettywriter.h"
-
-using Writer = rapidjson::PrettyWriter<rapidjson::StringBuffer>;
+#include "serialize.hh"
 
 namespace my_traits {
+
+class Any;
+
+class WrapperBase {
+public:
+    virtual std::unique_ptr<WrapperBase> clone() = 0;
+    virtual void serialize(Writer &writer) = 0;
+    virtual ~WrapperBase() {}
+};
+
+template<typename T>
+class Wrapper : public WrapperBase {
+public:
+    Wrapper(T d) : data_(d) {}
+
+    std::unique_ptr<WrapperBase> clone() override {
+        return std::make_unique<Wrapper<T>>(data_);
+    }
+    void serialize(Writer &writer) override {
+        serialize::serialize(writer, data_);
+    }
+
+private:
+    friend class Any;
+    T data_;
+};
+
 class Any {
 public:
     Any() {}
@@ -31,11 +55,6 @@ public:
     Any& operator=(const Any &any) {
         assign(any);
         return *this;
-    }
-
-    template<typename T>
-    inline void init(T d) {
-
     }
 
     template <typename T>
@@ -74,31 +93,11 @@ public:
         return typename_;
     }
 
-    // template <typename Writer>
     void serialize(Writer& writer) const;
     uint64_t hash() const;
     void update(SipHash& hash) const;
 
 private:
-    class WrapperBase {
-    public:
-            virtual std::unique_ptr<WrapperBase> clone() = 0;
-            virtual ~WrapperBase() {}
-    };
-
-    template<typename T>
-    class Wrapper : public WrapperBase {
-    public:
-        Wrapper(T d) : data_(d) {}
-
-        std::unique_ptr<WrapperBase> clone() override {
-            return std::make_unique<Wrapper<T>>(data_);
-        }
-    private:
-        friend class Any;
-        T data_;
-    };
-
     std::unique_ptr<WrapperBase> wrapper_;
     std::string typename_;
 };

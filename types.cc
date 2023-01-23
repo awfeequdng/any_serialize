@@ -1,5 +1,8 @@
 #include "types.hh"
 #include "SipHash.hh"
+#include <my_traits.hh>
+#include <stdexcept>
+
 
 // template <typename Writer>
 void Address::serialize(Writer& writer) const {
@@ -81,8 +84,7 @@ void Person::update(SipHash& hash) const {
 
 // template <typename Writer>
 void Friend::serialize(Writer& writer) const {
-   writer.StartObject();
-
+    writer.StartObject();
     writer.String("relation");
     writer.String(relation.c_str(), static_cast<rapidjson::SizeType>(relation.length()));
 
