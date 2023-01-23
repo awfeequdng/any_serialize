@@ -3,9 +3,15 @@
 #include <exception>
 #include <memory>
 #include <cxxabi.h>
+
+#include "rapidjson/rapidjson.h"
+#include "rapidjson/prettywriter.h"
+
 #include <stdexcept>
 
 #include <iostream>
+
+using Writer = rapidjson::PrettyWriter<rapidjson::StringBuffer>;
 
 namespace my_traits {
 class Any {
@@ -56,6 +62,9 @@ public:
     const std::string& get_typename() const {
         return typename_;
     }
+
+    // template <typename Writer>
+    void serialize(Writer& writer) const;
 
 private:
     class WrapperBase {

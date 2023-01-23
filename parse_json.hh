@@ -1,7 +1,7 @@
 #include "types.hh"
 #include "rapidjson/document.h"
 
-namespace my_json {
+namespace serialize {
 
 template <typename T>
 T parse_json(std::string json) {
@@ -40,4 +40,4 @@ std::vector<Person> parse<std::vector<Person>>(rapidjson::GenericValue<rapidjson
 template<>
 my_traits::Any parse<my_traits::Any>(rapidjson::GenericValue<rapidjson::UTF8<>> &value);
 
-} // namespace my_json
+} // namespace serialize

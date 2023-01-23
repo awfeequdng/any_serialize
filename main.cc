@@ -5,7 +5,7 @@
 
 #include "any.hh"
 #include "types.hh"
-#include "dump_json.hh"
+#include "serialize.hh"
 #include "parse_json.hh"
 
 void test_set() {
@@ -57,15 +57,11 @@ void test_dump() {
     // any.set(addr1);
     // std::cout << "address type: " << any.get_typename() << std::endl;
 
-    auto json_p1 = my_json::dump_json(p1);
-    // std::cout << p1 << std::endl;
-    auto pp = my_json::parse_json<Person>(json_p1);
-    auto json_pp = my_json::dump_json(pp);
-    // if (json_p1 == json_pp) {
-    //     std::cout << "json_p1 == json_pp" << std::endl;
-    // } else {
-    //     std::cout << "json_p1 != json_pp" << std::endl;
-    // }
+    auto json_p1 = serialize::dump_json(p1);
+    std::cout << p1 << std::endl;
+    auto pp = serialize::parse_json<Person>(json_p1);
+    std::cout << pp << std::endl;
+    auto json_pp = serialize::dump_json(pp);
     assert(json_p1 == json_pp);
 }
 

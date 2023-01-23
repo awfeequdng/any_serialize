@@ -2,8 +2,7 @@
 #include <rapidjson/encodings.h>
 #include <stdexcept>
 #include <vector>
-namespace my_json {
-
+namespace serialize {
 
 template <>
 Person parse_json<Person>(std::string json) {
@@ -64,21 +63,26 @@ std::vector<Friend> parse<std::vector<Friend>>(rapidjson::GenericValue<rapidjson
 template<>
 my_traits::Any parse<my_traits::Any>(rapidjson::GenericValue<rapidjson::UTF8<>> &value) {
     my_traits::Any any;
-    if (!value.IsObject()) {
-        return any;
-    }
-    if (value.HasMember("string")) {
-        any.set(value["string"].GetString());
-    }
-    if (value.HasMember("int")) {
-        any.set(value["int"].GetInt());
-    }
-    if (value.HasMember("Singer")) {
-        any.set(parse<Singer>(value["Singer"]));
+    if (value.IsString()) {
+        any.set(value.GetString());
+    } else if (value.IsInt()) {
+        any.set(value.GetInt());
+    } else if (value.IsObject()) {
+        any.set(parse<Singer>(value));
+    } else if (value.IsNull()) {
     } else {
-        // throw std::logic_error("not supported any type");
-
+        throw std::logic_error("not supported any type");
     }
+
+    // if (value.HasMember("string")) {
+    //     any.set(value["string"].GetString());
+    // } else if (value.HasMember("int")) {
+    //     any.set(value["int"].GetInt());
+    // } else if (value.HasMember("Singer")) {
+    //     any.set(parse<Singer>(value["Singer"]));
+    // } else {
+    //     throw std::logic_error("not supported any type");
+    // }
     return any;
 }
 template<>
@@ -100,4 +104,4 @@ Person parse<Person>(rapidjson::Document &doc) {
     return p;
 }
 
-} // namespace my_json
+} // namespace serialize
