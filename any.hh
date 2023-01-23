@@ -6,8 +6,7 @@
 #include <stdexcept>
 #include <iostream>
 
-#include "SipHash.hh"
-
+#include "hash.hh"
 #include "serialize.hh"
 
 namespace my_traits {
@@ -18,6 +17,7 @@ class WrapperBase {
 public:
     virtual std::unique_ptr<WrapperBase> clone() = 0;
     virtual void serialize(Writer &writer) = 0;
+    virtual void update_hash(SipHash &hash) = 0;
     virtual ~WrapperBase() {}
 };
 
@@ -33,6 +33,9 @@ public:
         serialize::serialize(writer, data_);
     }
 
+    void update_hash(SipHash &hash) override {
+        my_hash::update_hash(hash, data_);
+    }
 private:
     friend class Any;
     T data_;
@@ -95,7 +98,7 @@ public:
 
     void serialize(Writer& writer) const;
     uint64_t hash() const;
-    void update(SipHash& hash) const;
+    void update_hash(SipHash& hash) const;
 
 private:
     std::unique_ptr<WrapperBase> wrapper_;

@@ -20,7 +20,7 @@ struct Singer {
     void serialize(Writer& writer) const;
 
     uint64_t hash() const;
-    void update(SipHash& hash) const;
+    void update_hash(SipHash& hash) const;
 };
 
 struct Address {
@@ -32,7 +32,7 @@ struct Address {
     // template <typename Writer>
     void serialize(Writer& writer) const;
     uint64_t hash() const;
-    void update(SipHash& hash) const;
+    void update_hash(SipHash& hash) const;
 };
 
 struct Friend {
@@ -42,7 +42,7 @@ struct Friend {
     // template <typename Writer>
     void serialize(Writer& writer) const;
     uint64_t hash() const;
-    void update(SipHash& hash) const;
+    void update_hash(SipHash& hash) const;
 };
 struct Person {
     std::string name;
@@ -54,7 +54,7 @@ struct Person {
     // template <typename Writer>
     void serialize(Writer& writer) const;
     uint64_t hash() const;
-    void update(SipHash& hash) const;
+    void update_hash(SipHash& hash) const;
 };
 
 template<MyTypeCheck T>

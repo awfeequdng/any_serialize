@@ -28,16 +28,16 @@ void Address::serialize(Writer& writer) const {
 
 uint64_t Address::hash() const {
     SipHash hash;
-    update(hash);
+    update_hash(hash);
     return hash.get64();
 }
 
-void Address::update(SipHash& hash) const {
+void Address::update_hash(SipHash& hash) const {
     hash.update(country);
     hash.update(city);
     hash.update(street);
     for (auto &neighbor : neighbors) {
-        neighbor.update(hash);
+        neighbor.update_hash(hash);
     }
 }
 
@@ -68,18 +68,18 @@ void Person::serialize(Writer& writer) const {
 
 uint64_t Person::hash() const {
     SipHash hash;
-    update(hash);
+    update_hash(hash);
     return hash.get64();
 }
 
-void Person::update(SipHash& hash) const {
+void Person::update_hash(SipHash& hash) const {
     hash.update(name);
     hash.update(age);
-    address.update(hash);
+    address.update_hash(hash);
     for (auto &f : friends) {
-        f.update(hash);
+        f.update_hash(hash);
     }
-    secret.update(hash);
+    secret.update_hash(hash);
 }
 
 // template <typename Writer>
@@ -95,13 +95,13 @@ void Friend::serialize(Writer& writer) const {
 }
 uint64_t Friend::hash() const {
     SipHash hash;
-    update(hash);
+    update_hash(hash);
     return hash.get64();
 }
 
-void Friend::update(SipHash& hash) const {
+void Friend::update_hash(SipHash& hash) const {
     hash.update(relation);
-    secret.update(hash);
+    secret.update_hash(hash);
 }
 
 // template <typename Writer>
@@ -119,11 +119,11 @@ void Singer::serialize(Writer& writer) const {
 
 uint64_t Singer::hash() const {
     SipHash hash;
-    update(hash);
+    update_hash(hash);
     return hash.get64();
 }
 
-void Singer::update(SipHash& hash) const {
+void Singer::update_hash(SipHash& hash) const {
     hash.update(type);
     hash.update(age);
 }
