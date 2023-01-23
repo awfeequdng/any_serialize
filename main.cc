@@ -62,10 +62,21 @@ void test_dump() {
 }
 
 int main() {
-    test_set();
-    test_get();
 
-    test_dump();
+    Friend f1{"my best friend", Singer{"rocker", 18}};
+    Friend f2{"new friend", "little girl"};
+    Friend f3{"third friend", 3};
+
+    Person p2{"p2", 3, Address{"china", "shanghai", "putuo"}};
+    Address addr1{"china", "beijing", "wangjing", {p2}};
+
+    Person p1{"p1", 4, addr1, {f1, f2, f3}, "the kind!"};
+
+    auto json_p1 = serialize::dump_json(p1);
+    std::cout << json_p1 << std::endl;
+    std::cout << p1 << std::endl;
+    auto pp = serialize::parse_json<Person>(json_p1);
+    assert(p1 == pp);
 
     return 0;
 }

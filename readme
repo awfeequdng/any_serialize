@@ -31,15 +31,9 @@ $ make
 - 运行程序：序列化和反序列化的测试在test_dump函数中进行
 ```
 $ ./any
-test_set -------
-20
-i
-NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
-std::string type: NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
-St6vectorIiSaIiEE
-d
-test_get -------
-get value failed: invalid type: f
-test_dump -------
 ```
-最后一行`test_dump -------` 是序列化函数的打印，没有其他错误信息产生说明序列化和反序列化正常
+程序打印信息并正常退出，说明序列化和反序列化正确
+
+# 不足之处
+由于my_traits::Any类在序列化时没有带上类型信息，在反序列化时，解析对象结构时，只能解析Singer对象，还不支持其他对象的解析。
+为了解决这种情况，实现了一个带有类型信息的版本，该版本代码暂时被注释掉了。
