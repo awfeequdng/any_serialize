@@ -1,6 +1,6 @@
 #pragma once
-#include "SipHash.hh"
-#include "my_traits.hh"
+#include "hash/SipHash.hh"
+#include "traits/my_traits.hh"
 
 namespace my_hash {
 

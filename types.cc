@@ -1,7 +1,8 @@
-#include "types.hh"
-#include "SipHash.hh"
-#include <my_traits.hh>
 #include <stdexcept>
+
+#include "types.hh"
+#include "hash/SipHash.hh"
+#include "traits/my_traits.hh"
 
 
 // template <typename Writer>

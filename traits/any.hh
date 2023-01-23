@@ -6,8 +6,8 @@
 #include <stdexcept>
 #include <iostream>
 
-#include "hash.hh"
-#include "serialize.hh"
+#include "hash/hash.hh"
+#include "serialize/serialize.hh"
 
 namespace my_traits {
 

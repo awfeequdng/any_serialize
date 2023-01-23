@@ -1,5 +1,5 @@
-#include "serialize.hh"
 #include <rapidjson/rapidjson.h>
+#include "serialize/serialize.hh"
 
 namespace serialize {
 

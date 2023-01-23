@@ -3,10 +3,10 @@
 #include <vector>
 #include <string>
 
-#include "any.hh"
 #include "rapidjson/prettywriter.h"
-#include "SipHash.hh"
-#include "my_traits.hh"
+#include "hash/SipHash.hh"
+#include "traits/my_traits.hh"
+#include "traits/any.hh"
 
 struct Person;
 

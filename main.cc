@@ -3,10 +3,10 @@
 #include <stdexcept>
 #include <vector>
 
-#include "any.hh"
+#include "traits/any.hh"
 #include "types.hh"
-#include "serialize.hh"
-#include "parse_json.hh"
+#include "serialize/serialize.hh"
+#include "serialize/parse_json.hh"
 
 void test_set() {
     std::cout << "test_set -------" << std::endl;

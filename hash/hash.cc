@@ -1,4 +1,4 @@
-#include "hash.hh"
+#include "hash/hash.hh"
 
 namespace my_hash {
 

@@ -6,8 +6,7 @@
 #include <iostream>
 #include <type_traits>
 
-#include "my_traits.hh"
-// #include "types.hh"
+#include "traits/my_traits.hh"
 
 #include "rapidjson/rapidjson.h"
 #include "rapidjson/prettywriter.h"

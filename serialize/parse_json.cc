@@ -1,7 +1,9 @@
-#include "parse_json.hh"
-#include <rapidjson/encodings.h>
 #include <stdexcept>
 #include <vector>
+
+#include "serialize/parse_json.hh"
+#include <rapidjson/encodings.h>
+
 namespace serialize {
 
 template <>
