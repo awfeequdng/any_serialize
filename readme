@@ -1,8 +1,11 @@
 # any实现参考
-https://www.bilibili.com/video/BV1B84y1v7vk/?spm_id_from=333.788&vd_source=7e0f3f1d756b94c85b97bd8662879194
+- https://www.bilibili.com/video/BV1B84y1v7vk/?spm_id_from=333.788&vd_source=7e0f3f1d756b94c85b97bd8662879194
 
 # json格式
-https://www.w3school.com.cn/js/js_json_arrays.asp
+- https://www.w3school.com.cn/js/js_json_arrays.asp
 
 # c++ concept概念
-https://blog.csdn.net/gaoZhuanMing/article/details/120228317
+- https://blog.csdn.net/gaoZhuanMing/article/details/120228317
+
+# hash实现
+- 借鉴clickhouse中的SipHash

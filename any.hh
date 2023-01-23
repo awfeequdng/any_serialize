@@ -3,13 +3,13 @@
 #include <exception>
 #include <memory>
 #include <cxxabi.h>
+#include <stdexcept>
+#include <iostream>
+
+#include "SipHash.hh"
 
 #include "rapidjson/rapidjson.h"
 #include "rapidjson/prettywriter.h"
-
-#include <stdexcept>
-
-#include <iostream>
 
 using Writer = rapidjson::PrettyWriter<rapidjson::StringBuffer>;
 
@@ -33,20 +33,31 @@ public:
         return *this;
     }
 
+    template<typename T>
+    inline void init(T d) {
+
+    }
+
     template <typename T>
-    Any(T d) : wrapper_(std::make_unique<Wrapper<T>>(d)) {
-        auto tn = typeid(T).name();
+    Any(T d) {
+        set(d);
+    }
+
+    template <typename T>
+    requires std::is_same<T, const char *>::value
+    void set(T d) {
+        auto tn = typeid(std::string).name();
         typename_ = tn;
         // int status;
         // typename_ = abi::__cxa_demangle(tn, nullptr, nullptr, &status);
+        wrapper_ = std::make_unique<Wrapper<std::string>>(std::string(d));
     }
-    template <typename T>
+
+    template<typename T>
     void set(T d) {
         auto tn = typeid(T).name();
         typename_ = tn;
-        // int status;
-        // typename_ = abi::__cxa_demangle(tn, nullptr, nullptr, &status);
-        wrapper_ = std::make_unique< Wrapper<T>>(d);
+        wrapper_ = std::make_unique<Wrapper<T>>(d);
     }
 
     template <typename T>
@@ -65,6 +76,8 @@ public:
 
     // template <typename Writer>
     void serialize(Writer& writer) const;
+    uint64_t hash() const;
+    void update(SipHash& hash) const;
 
 private:
     class WrapperBase {

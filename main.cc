@@ -9,6 +9,7 @@
 #include "parse_json.hh"
 
 void test_set() {
+    std::cout << "test_set -------" << std::endl;
     my_traits::Any any;
     any.set(20);
     std::cout << any.get<int>() << std::endl;
@@ -28,6 +29,7 @@ void test_set() {
 }
 
 void test_get() {
+    std::cout << "test_get -------" << std::endl;
     my_traits::Any any;
     any.set(30);
     try {
@@ -52,17 +54,13 @@ void test_dump() {
     Address addr1{"china", "beijing", "wangjing", {p2}};
     Person p1{"p1", 4, addr1, {f1, f2, f3}, "the kind!"};
 
-    // my_traits::Any any(p1);
-    // std::cout << "person type: " << any.get_typename() << std::endl;
-    // any.set(addr1);
-    // std::cout << "address type: " << any.get_typename() << std::endl;
-
     auto json_p1 = serialize::dump_json(p1);
-    std::cout << p1 << std::endl;
     auto pp = serialize::parse_json<Person>(json_p1);
-    std::cout << pp << std::endl;
+    // std::cout << json_p1 << std::endl;
     auto json_pp = serialize::dump_json(pp);
+    // std::cout << json_pp << std::endl;
     assert(json_p1 == json_pp);
+    assert(p1 == pp);
 }
 
 int main() {

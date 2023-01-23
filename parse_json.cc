@@ -73,18 +73,22 @@ my_traits::Any parse<my_traits::Any>(rapidjson::GenericValue<rapidjson::UTF8<>> 
     } else {
         throw std::logic_error("not supported any type");
     }
-
-    // if (value.HasMember("string")) {
-    //     any.set(value["string"].GetString());
-    // } else if (value.HasMember("int")) {
-    //     any.set(value["int"].GetInt());
-    // } else if (value.HasMember("Singer")) {
-    //     any.set(parse<Singer>(value["Singer"]));
-    // } else {
-    //     throw std::logic_error("not supported any type");
-    // }
     return any;
 }
+
+// template<>
+// my_traits::Any parse<my_traits::Any>(rapidjson::GenericValue<rapidjson::UTF8<>> &value) {
+//     my_traits::Any any;
+//     if (value.HasMember("string")) {
+//         any.set(value["string"].GetString());
+//     } else if (value.HasMember("int")) {
+//         any.set(value["int"].GetInt());
+//     } else if (value.HasMember("Singer")) {
+//         any.set(parse<Singer>(value["Singer"]));
+//     }
+//     return any;
+// }
+
 template<>
 Singer parse<Singer>(rapidjson::GenericValue<rapidjson::UTF8<>> &value) {
     Singer singer;

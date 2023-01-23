@@ -1,4 +1,5 @@
 #include "types.hh"
+#include "SipHash.hh"
 
 // template <typename Writer>
 void Address::serialize(Writer& writer) const {
@@ -22,11 +23,20 @@ void Address::serialize(Writer& writer) const {
     writer.EndObject();
 }
 
-    // std::string name;
-    // int age;
-    // Address address;
-    // std::vector<Friend> friends;
-    // my_traits::Any secret;
+uint64_t Address::hash() const {
+    SipHash hash;
+    update(hash);
+    return hash.get64();
+}
+
+void Address::update(SipHash& hash) const {
+    hash.update(country);
+    hash.update(city);
+    hash.update(street);
+    for (auto &neighbor : neighbors) {
+        neighbor.update(hash);
+    }
+}
 
 // template <typename Writer>
 void Person::serialize(Writer& writer) const {
@@ -53,8 +63,22 @@ void Person::serialize(Writer& writer) const {
     writer.EndObject();
 }
 
-    // std::string relation;
-    // my_traits::Any secret;
+uint64_t Person::hash() const {
+    SipHash hash;
+    update(hash);
+    return hash.get64();
+}
+
+void Person::update(SipHash& hash) const {
+    hash.update(name);
+    hash.update(age);
+    address.update(hash);
+    for (auto &f : friends) {
+        f.update(hash);
+    }
+    secret.update(hash);
+}
+
 // template <typename Writer>
 void Friend::serialize(Writer& writer) const {
    writer.StartObject();
@@ -67,9 +91,17 @@ void Friend::serialize(Writer& writer) const {
 
     writer.EndObject();
 }
+uint64_t Friend::hash() const {
+    SipHash hash;
+    update(hash);
+    return hash.get64();
+}
 
-    // std::string type;
-    // int age;
+void Friend::update(SipHash& hash) const {
+    hash.update(relation);
+    secret.update(hash);
+}
+
 // template <typename Writer>
 void Singer::serialize(Writer& writer) const {
     writer.StartObject();
@@ -83,3 +115,13 @@ void Singer::serialize(Writer& writer) const {
     writer.EndObject();
 }
 
+uint64_t Singer::hash() const {
+    SipHash hash;
+    update(hash);
+    return hash.get64();
+}
+
+void Singer::update(SipHash& hash) const {
+    hash.update(type);
+    hash.update(age);
+}

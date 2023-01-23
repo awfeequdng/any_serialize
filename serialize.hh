@@ -6,10 +6,8 @@
 #include <iostream>
 #include <type_traits>
 
+#include "my_traits.hh"
 #include "types.hh"
-
-template<typename T>
-concept MyTypeCheck = std::is_same<T, Person>::value || std::is_same<T, Address>::value || std::is_same<T, Friend>::value || std::is_same<T, Singer>::value;
 
 namespace serialize {
 
