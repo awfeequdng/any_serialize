@@ -68,7 +68,7 @@ public:
     template<typename T>
     void set(T d) {
         typename_ = typeid(T).name();
-        if constexpr (std::is_same<T, const char *>::value) {
+        if constexpr (std::is_same_v<T, const char *>) {
             wrapper_ = std::make_unique<Wrapper<std::string>>(std::string(d));
         } else {
             wrapper_ = std::make_unique<Wrapper<T>>(d);
