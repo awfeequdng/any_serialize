@@ -65,21 +65,14 @@ public:
         set(d);
     }
 
-    template <typename T>
-    requires std::is_same<T, const char *>::value
-    void set(T d) {
-        auto tn = typeid(std::string).name();
-        typename_ = tn;
-        // int status;
-        // typename_ = abi::__cxa_demangle(tn, nullptr, nullptr, &status);
-        wrapper_ = std::make_unique<Wrapper<std::string>>(std::string(d));
-    }
-
     template<typename T>
     void set(T d) {
-        auto tn = typeid(T).name();
-        typename_ = tn;
-        wrapper_ = std::make_unique<Wrapper<T>>(d);
+        typename_ = typeid(T).name();
+        if constexpr (std::is_same<T, const char *>::value) {
+            wrapper_ = std::make_unique<Wrapper<std::string>>(std::string(d));
+        } else {
+            wrapper_ = std::make_unique<Wrapper<T>>(d);
+        }
     }
 
     template <typename T>
